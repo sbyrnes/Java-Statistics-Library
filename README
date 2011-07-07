@@ -1,3 +1,30 @@
-A general Java library for common statistical functions. 
+Java Statistics Library v0.1
+=============================
+A general Java library for common statistical functions. All operations are floating-point 
+safe utilizing the BigDecimal framework. 
 
-Why is this not already part of Java? Who knows.
+=============================
+Usage instructions
+
+Compile the library using the enclosed ant file as shown below:
+
+ant build.xml
+
+All operations are based on the concept of a Distribution which is a collection of samples. 
+
+=============================
+FAQ:
+Does the library provide a complete set of statistical functions?
+
+No, at least not yet. For now it will include the functions I find more interesting to work on
+or more useful. If you want to help contribute more please do.
+
+I don't use BigDecimal in my program, can I still use the library?
+
+You really should be, especially if you deal with currency. If you don't then there are constructors
+available to create a Distribution from an element set. However, the result you get will be a BigDecimal
+so you have a change to practice using BigDecimal. 
+
+Why is this not already part of Java? 
+
+Who knows. I have needed at least one of these functions in every project I've ever done.
