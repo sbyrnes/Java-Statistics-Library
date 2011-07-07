@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="jar" name="Java-Statistics-Library">
+    <!-- ===================================================================
+          Compiler Preferences
+         =================================================================== -->
+    <property name="debug" value="true" />
+    <property name="verbose" value="false" />	
+    <property name="deprecation" value="false" />
+    <property name="optimize" value="false" />
+    <property name="encoding" value="Cp1252" />
+    
+    <property name="target.build" value="build" />
+    <property name="target.jar" value="javaStatistics.war" />
+    
+    <!-- ===================================================================
+          Cleaning target
+         =================================================================== -->
+    <target name="clean">
+        <delete dir="${target.build}" failonerror="false"/>
+        <delete dir="${target.jar}" failonerror="false"/>
+        
+        <mkdir dir="${target.build}"/>
+    </target>
+    
+    <!-- ===================================================================
+          Compilation to .class files target
+         =================================================================== -->
+    <target depends="clean" name="compile">
+        <echo message="Building ${ant.project.name}: ${target.jar}"/>
+        	
+        <javac destdir="${target.build}"
+        	encoding="${encoding}"
+            debug="${debug}"
+        	verbose="${verbose}"
+            deprecation="${deprecation}"
+            optimize="${optimize}">
+     	   		<src location="./src"/>
+        </javac>
+    </target>
+    
+    <!-- ===================================================================
+          Build the JAR archive
+         =================================================================== -->
+    <target depends="compile" name="jar">
+		<jar destfile="${target.jar}"
+		    basedir="${target.build}"
+		  	/>
+    </target>
+</project>
