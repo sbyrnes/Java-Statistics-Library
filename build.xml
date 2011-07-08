@@ -10,7 +10,7 @@
     <property name="encoding" value="Cp1252" />
     
     <property name="target.build" value="build" />
-    <property name="target.jar" value="javaStatistics.war" />
+    <property name="target.jar" value="javaStatistics.jar" />
     
     <!-- ===================================================================
           Cleaning target
