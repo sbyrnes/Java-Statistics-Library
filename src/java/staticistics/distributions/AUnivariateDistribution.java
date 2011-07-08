@@ -1,8 +1,12 @@
-package java.staticistics;
+package java.staticistics.distributions;
 
 import java.math.BigDecimal;
+import java.staticistics.Statistics;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /** 
@@ -11,14 +15,14 @@ import java.util.Set;
  * Internal computations are all done using BigDecimals.
  * @author Sean Byrnes
  */
-public class ADistribution {
+public class AUnivariateDistribution {
 	public static final BigDecimal TWO = new BigDecimal(2);
 	public static final BigDecimal ZERO = new BigDecimal(0);
 	
 	Set<BigDecimal> samples;
 	BigDecimal count;
 	
-	public ADistribution(Set<BigDecimal> samples)
+	public AUnivariateDistribution(Set<BigDecimal> samples)
 	{
 		this.samples = samples;
 		this.count = new BigDecimal(samples.size());
@@ -83,6 +87,72 @@ public class ADistribution {
 		return mean;
 	}
 
+	/**
+	 * Retrieve the mode of the distribution, defined as the value that appears
+	 * most frequently.
+	 * 
+	 * @return BigDecimal Median
+	 */
+	public BigDecimal getMode()
+	{
+		Map<BigDecimal, Integer> valueCountMap = new HashMap<BigDecimal, Integer>();
+		BigDecimal mode = null;
+		int modeCount   = 0;
+		
+		for(BigDecimal value : samples)
+		{
+			if(valueCountMap.containsKey(value))  // have we seen this value before
+			{
+				int thisItemCount = valueCountMap.get(value);
+				thisItemCount += 1;
+				valueCountMap.put(value, thisItemCount);
+				
+				if(thisItemCount > modeCount)
+				{
+					// the frequency of this value is higher than the current mode
+					mode = value;
+					modeCount = thisItemCount;
+				}
+			} else {
+				valueCountMap.put(value, 1); 	// initialize count to one
+				if(mode == null)			 
+				{
+					// no mode defined yet so make this item the mode
+					mode = value;
+					modeCount = 1;
+				}
+			}
+		}
+		
+		return mode;
+	}
+	
+	/**
+	 * Retrieve the median absolute deviation of the sample. This is a robust statistic of the variance. 
+	 * 
+	 * It is calculated as the median of the absolute values of the difference between values and the median.
+	 * 
+	 * @return BigDecimal Median absolute deviation
+	 */
+	public BigDecimal getMedianAbsoluteDeviation()
+	{
+		BigDecimal medianAbsoluteDeviation = null;
+		Set<BigDecimal> absoluteResiduals = new HashSet<BigDecimal>();
+		
+		BigDecimal median = getMedian();
+		
+		for(BigDecimal value : samples)
+		{
+			absoluteResiduals.add(value.subtract(median).abs()); // the absolute residual from the median
+		}
+		
+		// use our own utility to find the median of the set of residuals
+		RandomDistribution residualDistribution = Statistics.buildRandomDistribution(absoluteResiduals);
+		medianAbsoluteDeviation = residualDistribution.getMedian();
+		
+		return medianAbsoluteDeviation;
+	}
+	
 	/**
 	 * Retrieve the sum of all values in the sample.
 	 * 

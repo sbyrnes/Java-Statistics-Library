@@ -1,4 +1,4 @@
-package java.staticistics;
+package java.staticistics.distributions;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -8,7 +8,7 @@ import java.util.Set;
  * 
  * @author Sean Byrnes
  */
-public class NormalDistribution extends ADistribution {
+public class NormalDistribution extends AUnivariateDistribution {
 
 	public NormalDistribution(Set<BigDecimal> samples) {
 		super(samples);
