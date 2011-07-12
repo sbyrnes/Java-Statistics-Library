@@ -1,7 +1,7 @@
-package java.staticistics.distributions;
+package com.flurry.staticistics.distributions;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Represents a normal distribution, also known as a bell curve.
@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class NormalDistribution extends AUnivariateDistribution {
 
-	public NormalDistribution(Set<BigDecimal> samples) {
+	public NormalDistribution(Collection<BigDecimal> samples) {
 		super(samples);
 	}
 

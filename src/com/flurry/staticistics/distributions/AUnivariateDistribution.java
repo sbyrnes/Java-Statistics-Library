@@ -1,13 +1,15 @@
-package java.staticistics.distributions;
+package com.flurry.staticistics.distributions;
 
 import java.math.BigDecimal;
-import java.staticistics.Statistics;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import com.flurry.statistics.Statistics;
 
 /** 
  * Represents an abstract distribution of samples. 
@@ -19,10 +21,10 @@ public class AUnivariateDistribution {
 	public static final BigDecimal TWO = new BigDecimal(2);
 	public static final BigDecimal ZERO = new BigDecimal(0);
 	
-	Set<BigDecimal> samples;
+	Collection<BigDecimal> samples;
 	BigDecimal count;
 	
-	public AUnivariateDistribution(Set<BigDecimal> samples)
+	public AUnivariateDistribution(Collection<BigDecimal> samples)
 	{
 		this.samples = samples;
 		this.count = new BigDecimal(samples.size());
@@ -42,18 +44,18 @@ public class AUnivariateDistribution {
 		ArrayList<BigDecimal> sortedSamples = new ArrayList<BigDecimal>(samples);
 		Collections.sort(sortedSamples);
 		
+		// if there is only one elment, return it
+		if(count.intValue() == 1) return sortedSamples.get(0);
+		
 		// TODO: Find a better even/odd test
 		if(count.remainder(TWO).equals(ZERO)) // even
 		{
 			// The median of an even set is the mean of the values at n/2 and n/2+1
-			int medianIndex1 = count.divide(TWO,  						// divide by two
-											count.scale(), 				// use the same scale
-											BigDecimal.ROUND_CEILING)  	// round to the ceiling
-											.intValue();
-			int medianIndex2 = count.divide(TWO,  						// divide by two
-										    count.scale(), 				// use the same scale
-										    BigDecimal.ROUND_FLOOR)  	// round to the floor
-										    .intValue();
+			BigDecimal median1 = count.divide(TWO,  						// divide by two
+											  count.scale(), 				// use the same scale
+											  BigDecimal.ROUND_CEILING);  	// round to the ceiling
+			int medianIndex1 = median1.intValue(); // n/2+1 (due to array indexing starting at zero)
+			int medianIndex2 = medianIndex1-1;	   // n/2
 			
 			BigDecimal medianValue1 = sortedSamples.get(medianIndex1);  // n/2 value
 			BigDecimal medianValue2 = sortedSamples.get(medianIndex2);  // n/2+1 value
@@ -64,7 +66,7 @@ public class AUnivariateDistribution {
 			int medianIndex = count.divide(TWO,  	// divide by two
 						 count.scale(), 			// use the same scale
 						 BigDecimal.ROUND_CEILING)  // round to the ceiling
-				 .intValue();
+				 .intValue()-1; 					// subtract 1 for zero index arrays
 						 
 			median = sortedSamples.get(medianIndex);
 		}
@@ -134,7 +136,7 @@ public class AUnivariateDistribution {
 	 * 
 	 * @return BigDecimal Median absolute deviation
 	 */
-	public BigDecimal getMedianAbsoluteDeviation()
+	public BigDecimal getMedianAbsoluteDeviation() throws Exception
 	{
 		BigDecimal medianAbsoluteDeviation = null;
 		Set<BigDecimal> absoluteResiduals = new HashSet<BigDecimal>();
