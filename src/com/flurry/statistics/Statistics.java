@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import com.flurry.staticistics.distributions.NormalDistribution;
-import com.flurry.staticistics.distributions.RandomDistribution;
+import com.flurry.statistics.distributions.NormalDistribution;
+import com.flurry.statistics.distributions.RandomDistribution;
+
+
 
 /**
  * Static class providing standard tools for comparing and analyzing distributions.

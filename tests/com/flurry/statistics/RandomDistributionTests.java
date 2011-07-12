@@ -1,7 +1,6 @@
 package com.flurry.statistics;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -9,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.flurry.statistics.Statistics;
+
 
 public class RandomDistributionTests {
 	private static final List<Integer> SINGLE_VALUE = Arrays.asList(1);
@@ -57,6 +56,14 @@ public class RandomDistributionTests {
 
 	@Test
 	public void testGetMedianAbsoluteDeviation() throws Exception {
-		fail("Not yet implemented");
+		// in a single element set the MAD is 0
+		assertEquals(new BigDecimal(0), 
+					 Statistics.buildRandomDistribution(SINGLE_VALUE).getMedianAbsoluteDeviation());
+		// MAD of sequential numbers should be the residual of the first or last quartiles
+		assertEquals(new BigDecimal(2.5), 
+					 Statistics.buildRandomDistribution(ORDINAL_SEQUENCE).getMedianAbsoluteDeviation());
+		// MAD of sequential numbers should be the residual of the first or last quartiles
+		assertEquals(new BigDecimal(4), 
+					 Statistics.buildRandomDistribution(FIBONACCI_SERIES).getMedianAbsoluteDeviation());
 	}
 }

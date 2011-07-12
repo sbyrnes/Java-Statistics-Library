@@ -1,15 +1,16 @@
-package com.flurry.staticistics.distributions;
+package com.flurry.statistics.distributions;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
-import java.util.Set;
 
 import com.flurry.statistics.Statistics;
+
+
 
 /** 
  * Represents an abstract distribution of samples. 
@@ -139,7 +140,7 @@ public class AUnivariateDistribution {
 	public BigDecimal getMedianAbsoluteDeviation() throws Exception
 	{
 		BigDecimal medianAbsoluteDeviation = null;
-		Set<BigDecimal> absoluteResiduals = new HashSet<BigDecimal>();
+		Collection<BigDecimal> absoluteResiduals = new LinkedList<BigDecimal>();
 		
 		BigDecimal median = getMedian();
 		

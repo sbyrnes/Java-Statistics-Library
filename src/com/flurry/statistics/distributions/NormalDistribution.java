@@ -1,4 +1,4 @@
-package com.flurry.staticistics.distributions;
+package com.flurry.statistics.distributions;
 
 import java.math.BigDecimal;
 import java.util.Collection;
